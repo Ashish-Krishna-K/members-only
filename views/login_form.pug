@@ -1,0 +1,11 @@
+extends index
+
+block content
+
+  h2 #{title}
+  form(action="", method="post") 
+    label(for="email") Email Id*:
+    input#email(type="email", name="email" required="true") 
+    label(for="password") Password*:
+    input#password(type="password", name="password")
+    button(type="submit") Login
