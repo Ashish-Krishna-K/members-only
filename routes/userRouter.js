@@ -55,13 +55,13 @@ router.post("/login",
   }),
 );
 
-router.post("/logout", (req, res, next) => {
-  req.logout(function (err) {
+router.get("/logout", (req, res, next) => {
+  console.log("here");
+  req.logout((err) => {
     if (err) {
-      next(err);
-    } else {
-      res.redirect('/');
+      return next(err);
     }
+    res.redirect('/');
   })
 });
 

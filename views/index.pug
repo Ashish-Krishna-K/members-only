@@ -9,8 +9,20 @@ html(lang="en")
   body
     if currentUser 
       h1 Welcome, #{currentUser.username}
-      a(href="/user/logout") 
+      a(href="/user/logout") Logout
+      a(href="/message/create") Create Message
     else 
       a(href="/user/login") LogIn 
       a(href="/user/signup") Sign Up  
     block content
+      if message_list 
+        ul 
+          for message in message_list  
+            li 
+              h3 #{message.title}
+              if message.message 
+                p #{message.message}
+              if currentUser  
+                if currentUser.member 
+                  p #{message.author}
+                  p #{message.timestamp}

@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 Message needs the have following fields:
 1. Title
 2. Message
-3. Time stampt
+3. Time stamp
 4. Author(just store the reference to the user)
 */
 
