@@ -5,6 +5,8 @@ const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const mongoDB = process.env.MONGO_URL;
 mongoose.connect(mongoDB, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -19,6 +21,8 @@ const messageRouter = require('./routes/messageRouter');
 
 const app = express();
 
+app.use(helmet());
+app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({ secret: "mugiwara", resave: false, saveUninitialized: true }));
 app.use(express.urlencoded({ extended: false }));
