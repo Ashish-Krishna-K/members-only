@@ -1,28 +1,19 @@
-doctype html 
-html(lang="en")
-  head 
-    meta(charset="UTF-8")
-    meta(http-equiv="X-UA-Compatible" content="IE=edge")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title The Strawhats
-    link(rel="stylesheet", href="/styles/style.css")
-  body
-    if currentUser 
-      h1 Welcome, #{currentUser.username}
-      a(href="/user/logout") Logout
-      a(href="/message/create") Create Message
-    else 
-      a(href="/user/login") LogIn 
-      a(href="/user/signup") Sign Up  
-    block content
-      if message_list 
-        ul 
-          for message in message_list  
-            li 
-              h3 #{message.title}
-              if message.message 
-                p #{message.message}
-              if currentUser  
-                if currentUser.member 
-                  p #{message.author}
-                  p #{message.timestamp}
+extends layout
+
+block content
+  h2 #{title}
+  if message_list 
+    ul.message-list 
+      for message in message_list  
+        li.message-view(class=(message.author.is_admin ? 'admin-class' : message.author.is_member ? 'member-class' : '')) 
+          div.message-view-top
+            h4 #{message.title}
+            if message.message 
+              p #{message.message}
+          div.message-view-bottom
+            if currentUser  
+              if currentUser.is_member 
+                p #{message.author.username}
+                p #{message.created}
+              if currentUser.is_admin 
+                a(href=`${message.url}/delete`) Delete message 

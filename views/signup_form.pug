@@ -1,9 +1,9 @@
-extends index
+extends layout
 
 block content
 
   h2 #{title} 
-  form(action="", method="post") 
+  form.signup-form(action="", method="post") 
     label(for="username") Username*: 
     input#username(type="text", name="username" required="true" value=(undefined===user ? '' : user.username)) 
     label(for="email") Email id*:

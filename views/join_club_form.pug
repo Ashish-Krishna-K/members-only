@@ -1,0 +1,12 @@
+extends layout
+
+block content 
+  h2 #{title}
+  if currentUser
+    form(action="", method="post") 
+      input(type="hidden", name="user" value=(currentUser._id))
+      label(for="passphrase") 
+      input#passphrase(type="password", name="passphrase")
+      button(type="submit") Submit
+  else 
+    p You need to login first to join the club.

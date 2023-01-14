@@ -1,0 +1,10 @@
+extends layout
+
+block content 
+  h2 #{title}
+  if status 
+    p Congratulations!!! You have successfully joined the club.
+    a(href="/") Home
+  else 
+    p Sorry! Incorrect passphrase. 
+    a(href="/join-club") Please try again

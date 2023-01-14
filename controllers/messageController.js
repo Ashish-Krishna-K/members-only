@@ -7,7 +7,6 @@ exports.message_list = (req, res, next) => {
     .sort({ time_stamp: -1 })
     .populate("author")
     .exec((err, list_messages) => {
-      console.log(list_messages);
       if (err) {
         return next(err);
       }
@@ -57,9 +56,16 @@ exports.create_message_form_post = [
 ]
 
 exports.delete_message_form_get = (req, res, next) => {
-  res.send('not yet implemented');
+  res.render("delete_message", {
+    title: "Delete Message"
+  })
 };
 
 exports.delete_message_form_post = (req, res, next) => {
-  res.send('not yet implemented');
+  Message.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  })
 };

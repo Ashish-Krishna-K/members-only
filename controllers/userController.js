@@ -86,17 +86,70 @@ exports.signup_form_post = [
 ];
 
 exports.login_form_get = (req, res, next) => {
-  res.render("login_form", { title: "Login" })
+  res.render("login_form", { title: "Login" });
 };
 
 exports.join_club_form_get = (req, res, next) => {
-  res.send('not yet implemented');
+  res.render("join_club_form", { title: "Join Secret Club" });
 };
 
 exports.join_club_form_post = (req, res, next) => {
-  res.send('not yet implemented');
+  if (req.body.passphrase === process.env.PASSPHRASE) {
+    User.findById(req.body.user, (err, user) => {
+      user.is_member = true;
+      user.save((err, updatedUser) => {
+        if (err) {
+          return next(err);
+        }
+        res.render("club_joined", {
+          title: "Success",
+          status: true,
+        })
+      })
+    })
+  } else {
+    res.render("club_joined", {
+      title: "Failed",
+      status: false,
+    })
+  }
 };
 
 exports.user_list = (req, res, next) => {
-  res.send('not yet implemented');
+  User.find({})
+    .sort({ joined_on: 1 })
+    .exec((err, users) => {
+      console.log(err, users);
+      if (err) {
+        return next(err);
+      }
+      res.render("dashboard", {
+        title: "Dashborad",
+        user_list: users,
+      })
+    })
 };
+
+exports.make_admin = (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    user.is_admin = true;
+    user.save((err, updatedUser) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(res.locals.currentUser.url)
+    })
+  })
+}
+
+exports.remove_admin = (req, res, next) => {
+  User.findById(req.params.id, (err, user) => {
+    user.is_admin = false;
+    user.save((err, updatedUser) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(res.locals.currentUser.url)
+    })
+  })
+}

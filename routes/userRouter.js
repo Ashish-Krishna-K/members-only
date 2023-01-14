@@ -71,4 +71,8 @@ router.post('/join-club', user_controller.join_club_form_post);
 
 router.get('/admin/:id', user_controller.user_list);
 
+router.get('/:id/make-admin', user_controller.make_admin);
+
+router.get('/:id/remove-admin', user_controller.remove_admin);
+
 module.exports = router;

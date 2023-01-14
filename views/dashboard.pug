@@ -1,0 +1,23 @@
+extends index 
+
+block content 
+  h2 #{title}
+  if currentUser 
+    ul.user-list 
+      for user in user_list 
+        if user.username !== currentUser.username
+          li.user-detail-view(class=(user.is_admin ? 'admin-class' : user.is_member ? 'member-class' : '')) 
+            div.user-detail-view-top 
+              p #[strong Username:] #{user.username}
+              p #[strong User Email:] #{user.email}
+              p #[strong Joined on:] #{user.joined}
+            div.user-detail-view-bottom
+              if user.is_member
+                p Member
+              if user.is_admin 
+                p Admin
+                a(href=`/user/${user._id}/remove-admin`) Remove Admin priviliges 
+              else  
+                a(href=`/user/${user._id}/make-admin`) Make this user Admin 
+  else 
+    p Please login to view the dashboard.      
