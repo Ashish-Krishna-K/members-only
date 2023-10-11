@@ -3,14 +3,36 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "build": "rm -rf dist && npx tsc && cp -rf src/views/ dist/",
+    "prestart": "npm run build",
+    "start": "DEBUG=inventory-application:* node ./bin/www",
+    "format": "prettier src/. --write",
+    "lint": "eslint src/**/*.ts --fix && npm run format",
+    "preserve": "npm run build",
+    "serve": "npx tsc -w & nodemon ./bin/www"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "http-errors": "~1.6.3",
+    "mongoose": "^7.6.1",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.4",
+    "@types/express": "^4.17.19",
+    "@types/morgan": "^1.9.6",
+    "@types/node": "^20.8.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   }
 }
