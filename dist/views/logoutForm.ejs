@@ -1,0 +1,14 @@
+<%- include('./header.ejs') %>
+<main class="signup-page">
+  <h2>
+    <%= title %>
+  </h2>
+  <form action="" method="post">
+    <h3>Do you really want to Logout?</h3>
+    <div class="controls">
+      <button type="submit">Yes</button>
+      <button type="button" onclick="history.back()">No</button>
+    </div>
+  </form>
+</main>
+<%- include('./footer.ejs') %>

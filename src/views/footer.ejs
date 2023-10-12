@@ -1,0 +1,36 @@
+<aside>
+  <% if (typeof locals.user !== "undefined") { %>
+    <ul>
+      <% if (locals.user.isMember === false) { %>
+        <li>
+          <a href="/users/membersignup">Become a member</a>
+        </li>
+      <% } %>
+      <% if (locals.user.isAdmin === false) { %>
+      <li>
+        <a href="/users/adminsignup">Become an Admin</a>
+      </li>
+      <% } %>
+      <li>
+        <a href="/users/logout">Logout</a>
+      </li>
+    </ul>
+  <% } else { %>
+    <ul>
+      <li>
+        <a href="/users/signup">Sign Up</a>
+      </li>
+      <li>
+        <a href="/users/login">Login</a>
+      </li>
+    </ul>
+  <% } %>
+</aside>
+<footer>
+  <p>
+    Project by <a href="https://github.com/Ashish-Krishna-K">Ashish-Krishna-K</a>
+  </p>
+</footer>
+</body>
+
+</html>

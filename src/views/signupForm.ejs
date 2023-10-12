@@ -1,0 +1,124 @@
+<%- include('./header.ejs') %>
+<main class="signup-page">
+  <h2>
+    Create account
+  </h2>
+  <form action="" method="post">
+    <caption>
+      <em>* required</em>
+    </caption>
+    <div class="first-name-input">
+      <label for="firstName">First Name*</label>
+      <% if (typeof errors !== "undefined") { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === "firstName") { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <input 
+        type="text"
+        id="firstName"
+        name="firstName"
+        value="<%= typeof formData !== "undefined" ? formData.firstName : "" %>"
+        required="true"
+      >
+    </div>
+    <div class="last-name-input">
+      <label for="lastName">Last Name*</label>
+      <% if (typeof errors !=="undefined" ) { %>
+        <% errors.forEach(error=> { %>
+          <% if (error.path==="lastName" ) { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <input 
+        type="text"
+        id="lastName"
+        name="lastName"
+        value="<%= typeof formData !== "undefined" ? formData.lastName : "" %>"
+        required="true"
+      >
+    </div>
+    <div class="email-input">
+      <label for="email">Email*</label>
+      <% if (typeof errors !== "undefined") { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === "email") { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <input 
+        type="email"
+        id="email"
+        name="email"
+        value="<%= typeof formData !== "undefined" ? formData.email : ""  %>"
+        required="true"
+      >
+    </div>
+    <div class="password-input">
+      <label for="password">
+        Password*
+        <span>
+          Password must be atleast 6 characters in lenght and have atleast 
+          1 uppercase character, 1 lowercase character, 1 digit and 1 special
+          character.
+        </span>
+      </label>
+      <% if (typeof errors !== "undefined") { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === "password") { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <input 
+        type="password" 
+        id="password" 
+        name="password" 
+        required="true"
+      >
+    </div>
+    <div class="confirm-password-input">
+      <label for="confirm-password">
+        Confirm Password*
+        <span>
+          Password must be atleast 6 characters in lenght and have atleast
+          1 uppercase character, 1 lowercase character, 1 digit and 1 special
+          character.
+        </span>
+      </label>
+      <% if (typeof errors !== "undefined") { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === "confirmPassword") { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <input 
+        type="password" 
+        id="confirm-password" 
+        name="confirmPassword" 
+        required="true"
+      >
+    </div>
+    <div class="controls">
+      <button type="submit">Sign Up</button>
+      <button type="reset">Clear Form</button>
+      <button type="button" onclick="location.href='/'">Cancel</button>
+    </div>
+  </form>
+</main>
+<%- include('./footer.ejs') %>

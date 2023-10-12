@@ -5,10 +5,22 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
 
 import indexRouter from './routes/index.js';
 import messagesRouter from './routes/messages.js';
 import usersRouter from './routes/users.js';
+import { authenticateUser, deserializeFunction } from './controllers/usersController.js';
+
+declare global {
+  namespace Express {
+    interface User {
+      id?: string;
+    }
+  }
+}
 
 const app = express();
 
@@ -32,11 +44,29 @@ connectToDb();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(session({ secret: process.env.SESSION_SECRET!, resave: false, saveUninitialized: true }));
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+    },
+    authenticateUser,
+  ),
+);
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser(deserializeFunction);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'public')));
+
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/messages', messagesRouter);
