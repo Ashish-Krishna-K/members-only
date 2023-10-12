@@ -142,6 +142,7 @@ export const postLogout = async (req: Request, res: Response, next: NextFunction
 };
 
 export const getMembershipSignup = (req: Request, res: Response) => {
+  if (typeof req.user === 'undefined') res.redirect('/users/login');
   res.render('memberSignupForm', {
     title: 'Become a member',
   });
@@ -156,6 +157,7 @@ export const postMembershipSignup = [
     .withMessage('Wrong passphrase!')
     .escape(),
   async (req: Request, res: Response, next: NextFunction) => {
+    if (typeof req.user === 'undefined') res.redirect('/users/login');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render('memberSignupForm', {
@@ -178,6 +180,7 @@ export const postMembershipSignup = [
 ];
 
 export const getAdminSignup = (req: Request, res: Response) => {
+  if (typeof req.user === 'undefined') res.redirect('/users/login');
   res.render('adminSignupForm', {
     title: 'Become Admin',
   });
@@ -192,6 +195,7 @@ export const postAdminSignup = [
     .withMessage('Wrong passphrase!')
     .escape(),
   async (req: Request, res: Response, next: NextFunction) => {
+    if (typeof req.user === 'undefined') res.redirect('/users/login');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render('adminSignupForm', {
