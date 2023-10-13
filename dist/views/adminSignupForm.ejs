@@ -1,5 +1,5 @@
 <%- include('./header.ejs') %>
-<main class="member-signup-page">
+<main class="admin-signup-page">
   <h2>
     <%= title %>
   </h2>
@@ -8,16 +8,15 @@
       <em>* required</em>
     </caption>
     <div class="passphrase-input">
-      <label for="passphrase">Enter the secret Passphrase to get membership!*</label>
-      <p>Hint: What was luffy's message to his crew?</p>
+      <label for="passphrase">Enter the secret Passphrase to become an Admin!*</label>
       <% if (typeof errors !== "undefined") { %>
-        <% errors.forEach(error => { %>
-          <% if (error.path === "passphrase") { %>
-            <span class="error">
-              <%= error.msg %>
-            </span>
-          <% } %>
-        <% }) %>
+      <% errors.forEach(error => { %>
+      <% if (error.path === "passphrase") { %>
+      <span class="error">
+        <%= error.msg %>
+      </span>
+      <% } %>
+      <% }) %>
       <% } %>
       <input type="text" id="passphrase" name="passphrase" required="true">
     </div>

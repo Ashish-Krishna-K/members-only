@@ -3,7 +3,7 @@
   <h2>
     Create account
   </h2>
-  <form action="" method="post">
+  <form action="" method="post" class="signup">
     <caption>
       <em>* required</em>
     </caption>
@@ -68,9 +68,11 @@
       <label for="password">
         Password*
         <span>
-          Password must be atleast 6 characters in lenght and have atleast 
-          1 uppercase character, 1 lowercase character, 1 digit and 1 special
-          character.
+          <em>
+            Password must be atleast 6 characters in lenght and have atleast
+            1 uppercase character, 1 lowercase character, 1 digit and 1 special
+            character.
+          </em>
         </span>
       </label>
       <% if (typeof errors !== "undefined") { %>
@@ -93,9 +95,11 @@
       <label for="confirm-password">
         Confirm Password*
         <span>
-          Password must be atleast 6 characters in lenght and have atleast
-          1 uppercase character, 1 lowercase character, 1 digit and 1 special
-          character.
+          <em>
+            Password must be atleast 6 characters in lenght and have atleast
+            1 uppercase character, 1 lowercase character, 1 digit and 1 special
+            character.
+          </em>
         </span>
       </label>
       <% if (typeof errors !== "undefined") { %>

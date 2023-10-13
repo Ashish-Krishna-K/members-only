@@ -11,16 +11,21 @@ const MessagesSchema = new Schema({
 });
 
 MessagesSchema.virtual('title').get(function () {
-  return this._title.split(' ').map(capitalize).join();
+  return this._title.split(' ').map(capitalize).join(' ');
 });
 
 MessagesSchema.virtual('url').get(function () {
   return `/users/${this.id}`;
 });
 
+MessagesSchema.virtual('timeStampFormatted').get(function () {
+  return new Intl.DateTimeFormat('en-US').format(this.timeStamp);
+});
+
 interface MessagesModel extends InferSchemaType<typeof MessagesSchema> {
   title: string;
   url: string;
+  timeStampFormatted: string;
 }
 
 export default mongoose.model<MessagesModel>('Messages', MessagesSchema);

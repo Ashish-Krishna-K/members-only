@@ -1,0 +1,37 @@
+<%- include('./header.ejs') %>
+<main class="message-delete-page">
+  <h2>
+    <%= title %>
+  </h2>
+  <div>
+    <h3>
+      <%= message.title %>
+    </h3>
+    <p>
+      by,
+      <span>
+        <%= message.createdBy.fullName %>
+      </span>
+    </p>
+    <p>
+      on,
+      <span>
+        <%= message.timeStampFormatted %>
+      </span>
+    </p>
+    <p>
+      <%= message.text %>
+    </p>
+  </div>
+  <form action="" method="post">
+    <h3>
+      Do you really want to delete this message?
+    </h3>
+    <input type="hidden" name="id" value="<%= message.id %>">
+    <div class="controls">
+      <button type="submit">Yes</button>
+      <button type="button" onclick="location.href='/'">No</button>
+    </div>
+  </form>
+</main>
+<%- include('./footer.ejs') %>

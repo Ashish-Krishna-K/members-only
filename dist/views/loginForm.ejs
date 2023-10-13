@@ -3,7 +3,7 @@
   <h2>
     <%= title %>
   </h2>
-  <form action="" method="post">
+  <form action="" method="post" class="login">
     <caption>
       <em>* required</em>
     </caption>
@@ -26,13 +26,9 @@
         required="true">
     </div>
     <% if (typeof errors !== "undefined") { %>
-      <ul>
-        <% errors.forEach(error => { %>
-          <li>
-            <%= error %>
-          </li>
-        <% }) %>
-      </ul>
+      <p>
+        <%= errors[errors.length - 1] %>
+      </p>
     <% } %>
     <div class="controls">
       <button type="submit">Login</button>

@@ -14,6 +14,8 @@ import messagesRouter from './routes/messages.js';
 import usersRouter from './routes/users.js';
 import { authenticateUser, deserializeFunction } from './controllers/usersController.js';
 
+// declaration merging to ensure typescript knows about the id
+// property in the session(which is added by passport)
 declare global {
   namespace Express {
     interface User {
@@ -48,6 +50,9 @@ app.use(session({ secret: process.env.SESSION_SECRET!, resave: false, saveUninit
 passport.use(
   new LocalStrategy(
     {
+      // By default, passport assumes the username field will be called as "username"
+      // but in this case we're using email field for username input hence declaring the
+      // correct field name for username field.
       usernameField: 'email',
     },
     authenticateUser,
@@ -64,6 +69,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use((req, res, next) => {
+  // setting the req.user(which is set by passport on authenticating) to the req.locals 
+  // object so it can be accessed by the views files
   res.locals.user = req.user;
   next();
 });

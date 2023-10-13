@@ -1,0 +1,40 @@
+<%- include('./header.ejs') %>
+<main class="home-page">
+  <% if (typeof locals.user !== "undefined") { %>
+    <a href="/messages/create" class="new-message">Add new message</a>
+  <% } %>
+  <ul class="messages-list">
+    <% messages.forEach(message => { %>
+      <li class="message">
+        <div class="not-admin">
+          <h3 class="title">
+            <%= message.title %>
+          </h3>
+          <% if (typeof locals.user !== "undefined" && locals.user.isMember) { %>
+            <div class="meta">
+              <p class="created-by">
+                by,
+                <span>
+                  <%= message.createdBy.fullName %>
+                </span>
+              </p>
+              <p class="timestamp">
+                on,
+                <span>
+                  <%= message.timeStampFormatted %>
+                </span>
+              </p>
+            </div>
+          <% } %>
+          <p class="text">
+            <%= message.text %>
+          </p>
+        </div>
+        <% if (typeof locals.user !== "undefined" && locals.user.isAdmin) { %>
+          <a href="<%= `/messages/${message.id}/delete` %>" class="delete-link">Delete Message</a>
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+</main>
+<%- include('./footer.ejs') %>

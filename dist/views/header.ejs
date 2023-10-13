@@ -13,4 +13,19 @@
       <h1>
         Members Only!
       </h1>
+      <% if (typeof locals.user !== "undefined") { %>
+        <div class="user-details">
+          <p>
+            <%= locals.user.fullName %>
+          </p>
+          <% if (locals.user.isAdmin) { %>
+          <p>Admin</p>
+          <% } %>
+          <% if (locals.user.isMember) { %>
+          <% if (!locals.user.isAdmin) { %>
+          <p>Member</p>
+          <% } %>
+          <% } %>
+        </div>
+      <% } %>
     </header>

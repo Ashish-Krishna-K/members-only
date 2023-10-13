@@ -1,0 +1,51 @@
+<%- include('./header.ejs') %>
+<main class="add-message-page">
+  <h2>
+    <%= title %>
+  </h2>
+  <form action="" method="post" class="add-message">
+    <caption>
+      <em>* required</em>
+    </caption>
+    <div class="title-input">
+      <label for="title">Title*</label>
+      <% if (typeof errors !== "undefined") { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === "title") { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <input 
+        type="text" 
+        id="title" 
+        name="title"
+        value="<%= typeof formData !== "undefined" ? formData.title : "" %>" 
+        required="true"
+      >
+    </div>
+    <div class="text-input">
+      <label for="text">Text*</label>
+      <% if (typeof errors !=="undefined" ) { %>
+        <% errors.forEach(error=> { %>
+          <% if (error.path==="text" ) { %>
+            <span class="error">
+              <%= error.msg %>
+            </span>
+          <% } %>
+        <% }) %>
+      <% } %>
+      <textarea name="text" id="text" cols="30" rows="3" required="true">
+        <%= typeof formData !== "undefined" ? formData.text : "" %>
+      </textarea>
+    </div>
+    <div class="controls">
+      <button type="submit">Add</button>
+      <button type="reset">Clear Form</button>
+      <button type="button" onclick="location.href='/'">Cancel</button>
+    </div>
+  </form>
+</main>
+<%- include('./footer.ejs') %>
