@@ -8,6 +8,9 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+import compression from 'compression';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 import indexRouter from './routes/index.js';
 import messagesRouter from './routes/messages.js';
@@ -46,6 +49,14 @@ connectToDb();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(helmet());
+// Set up rate limiter: maximum of twenty requests per minute
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
 app.use(session({ secret: process.env.SESSION_SECRET!, resave: false, saveUninitialized: true }));
 passport.use(
   new LocalStrategy(
@@ -67,9 +78,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use(compression());
 
 app.use((req, res, next) => {
-  // setting the req.user(which is set by passport on authenticating) to the req.locals 
+  // setting the req.user(which is set by passport on authenticating) to the req.locals
   // object so it can be accessed by the views files
   res.locals.user = req.user;
   next();
